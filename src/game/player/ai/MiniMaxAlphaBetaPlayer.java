@@ -17,6 +17,8 @@ public class MiniMaxAlphaBetaPlayer implements Player {
     private static final int CENTER_VALUE = 3;
     private String name;
     private Color color;
+    private static final int SCORE = 1;
+    private static final int COLUMN = 0;
 
     public MiniMaxAlphaBetaPlayer(String name, Color color) {
         this.name = name;
@@ -25,28 +27,40 @@ public class MiniMaxAlphaBetaPlayer implements Player {
 
     @Override
     public int nextColumn(GameState gameState) {
+        if (gameState.getLastMovedPlayer() == null) return 3;
         int[] result = miniMax(gameState, DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
-        System.out.println("best score is: " + result[1] + " for move in column: " + result[0]);
+        System.out.println("best score is: " + result[SCORE] + " for move in column: " + result[COLUMN]);
         return result[0];
     }
 
     private int[] miniMax(GameState gameState, int depth, int alpha, int beta, boolean maximizingPlayer) {
         Player currentPlayer = gameState.getLastMovedPlayer();
-        if (currentPlayer == null) return new int[]{3, CENTER_VALUE};
-        if (gameState.checkPlayerWon() && currentPlayer == this) return new int[]{0, WIN};
-        else if (gameState.checkPlayerWon() && currentPlayer != this) return new int[]{0, -WIN};
-        else if (gameState.isBoardFull()) return new int[]{0, 0};
-        else if (depth == 0) return new int[]{0, boardEvaluation(gameState, this)};
+        // win
+        if (gameState.checkPlayerWon() && currentPlayer == this) {
+            return new int[]{0, WIN};
+        }
+        // loss
+        else if (gameState.checkPlayerWon() && currentPlayer != this) {
+            return new int[]{0, -WIN};
+        }
+        // draw
+        else if (gameState.isBoardFull()) {
+            return new int[]{0, 0};
+        }
+        // eval
+        else if (depth == 0) {
+            return new int[]{0, boardEvaluation(gameState, this)};
+        }
 
         int bestScore;
         int col = 0;
         if (maximizingPlayer) {
-            bestScore = -10000000;
+            bestScore = -WIN;
             for (int i = 0; i < NUM_OF_COLUMNS; i++) {
                 if (!gameState.isColumnFull(i)) {
                     GameState gameCopy = new GameState(gameState);
                     gameCopy.insertPiece(i, this);
-                    int score = miniMax(gameCopy, depth - 1, alpha, beta, false)[1];
+                    int score = miniMax(gameCopy, depth - 1, alpha, beta, false)[SCORE];
                     if (score > bestScore) {
                         bestScore = score;
                         col = i;
@@ -57,12 +71,12 @@ public class MiniMaxAlphaBetaPlayer implements Player {
                 }
             }
         } else {
-            bestScore = 10000000;
+            bestScore = WIN;
             for (int i = 0; i < NUM_OF_COLUMNS; i++) {
                 if (!gameState.isColumnFull(i)) {
                     GameState gameCopy = new GameState(gameState);
                     gameCopy.insertPiece(i, this.getNextPlayer());
-                    int score = miniMax(gameCopy, depth - 1, alpha, beta, true)[1];
+                    int score = miniMax(gameCopy, depth - 1, alpha, beta, true)[SCORE];
                     if (score < bestScore) {
                         bestScore = score;
                         col = i;

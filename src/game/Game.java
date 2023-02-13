@@ -21,8 +21,8 @@ public class Game {
         currentPlayer = GameConfig.getRandomStartingPlayer();
         System.out.println(currentPlayer.getName());
         gameState = new GameState(NUM_OF_ROWS, NUM_OF_COLUMNS, currentPlayer);
-//        vis = new ConnectFourVisualization("Connect Four", NUM_OF_ROWS, NUM_OF_COLUMNS, currentPlayer.getColor());
-//        vis.start();
+        vis = new ConnectFourVisualization("Connect Four", NUM_OF_ROWS, NUM_OF_COLUMNS, currentPlayer.getColor());
+        vis.start();
         int turnCounter = 0;
         while (!gameState.isBoardFull()) {
 //            System.out.println(currentPlayer.getName() + "'s turn.");
@@ -39,8 +39,8 @@ public class Game {
 
             int newPieceRow = gameState.insertPiece(newPieceColumn, currentPlayer);
 
-//            vis.colorPiece(newPieceRow, newPieceColumn,
-//                    currentPlayer.getColor(), currentPlayer.getNextPlayer().getColor());
+            vis.colorPiece(newPieceRow, newPieceColumn,
+                    currentPlayer.getColor(), currentPlayer.getNextPlayer().getColor());
             turnCounter++;
             if (gameState.checkPlayerWon()) {
                 draw = false;
@@ -65,7 +65,7 @@ public class Game {
 
     public static void main(String[] args) throws InterruptedException {
         List<Integer> winners = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             winners.add(play());
         }
         System.out.println(winners);
