@@ -27,6 +27,9 @@ public class MiniMaxAlphaBetaPlayer implements Player {
 
     @Override
     public int nextColumn(GameState gameState) {
+        for (int i = 0; i < gameState.getNumberOfColumns(); i++) {
+            System.out.println(i);
+        }
         if (gameState.getLastMovedPlayer() == null) return 3;
         int[] result = miniMax(gameState, DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
         System.out.println("best score is: " + result[SCORE] + " for move in column: " + result[COLUMN]);
