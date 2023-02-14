@@ -9,14 +9,14 @@ import static game.Game.NUM_OF_COLUMNS;
 import static game.Game.NUM_OF_ROWS;
 
 public class MiniMaxPlayer implements Player {
-
-    private static final int DEPTH = 9;
+    // DEPTH + 1 moves calculated ahead
+    private static final int DEPTH = 8;
     private static final int WIN = 10000;
     private static final int THREE_IN_A_ROW = 15;
     private static final int TWO_IN_A_ROW = 5;
     private static final int CENTER_VALUE = 3;
-    private String name;
-    private Color color;
+    private final String name;
+    private final Color color;
 
     public MiniMaxPlayer(String name, Color color) {
         this.name = name;
@@ -36,7 +36,9 @@ public class MiniMaxPlayer implements Player {
         if (gameState.checkPlayerWon() && currentPlayer == this) return new int[]{0, WIN};
         else if (gameState.checkPlayerWon() && currentPlayer != this) return new int[]{0, -WIN};
         else if (gameState.isBoardFull()) return new int[]{0, 0};
-        else if (depth == 0) return new int[]{0, boardEvaluation(gameState, this)};
+        else if (depth == 0) {
+            return new int[]{0, boardEvaluation(gameState, this)};
+        }
 
         if (maximizingPlayer) {
             int bestScore = -10000000;

@@ -32,7 +32,7 @@ public class Game {
             } else {
                 long time = System.nanoTime();
                 newPieceColumn = currentPlayer.nextColumn(gameState);
-//                System.out.printf(" (%.5f seconds)\n", (System.nanoTime() - time) / 1_000_000_000.0);
+                System.out.printf(" (%.5f seconds)\n", (System.nanoTime() - time) / 1_000_000_000.0);
             }
 
 //            System.out.println();
@@ -49,7 +49,7 @@ public class Game {
 
             currentPlayer = currentPlayer.getNextPlayer();
         }
-        System.out.println(turnCounter);
+        System.out.println("game took " + turnCounter + " turns");
 
 
         if (draw) {
@@ -65,9 +65,9 @@ public class Game {
 
     public static void main(String[] args) throws InterruptedException {
         List<Integer> winners = new ArrayList<>();
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 10; i++) {
             winners.add(play());
         }
-        System.out.println(winners);
+        System.out.println("The winners are " + winners);
     }
 }
