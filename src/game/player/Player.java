@@ -9,6 +9,8 @@ public interface Player {
 
     int nextColumn(GameState gameState);
 
+    void setDepth(int depth);
+
     Color getColor();
 
     String getName();

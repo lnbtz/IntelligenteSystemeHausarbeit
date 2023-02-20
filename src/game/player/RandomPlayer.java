@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class RandomPlayer implements Player {
-    private String name;
-    private Color color;
+    private final String name;
+    private final Color color;
 
     public RandomPlayer(String name, Color color) {
         this.name = name;
@@ -34,6 +34,11 @@ public class RandomPlayer implements Player {
         }
         // error: board is full
         return -1;
+    }
+
+    @Override
+    public void setDepth(int depth) {
+
     }
 
     @Override

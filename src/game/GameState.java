@@ -71,9 +71,7 @@ public class GameState {
     public Player[][] getBoardCopy() {
         Player[][] boardCopy = new Player[numberOfRows][numberOfColumns];
         for (int row = 0; row < numberOfRows; row++) {
-            for (int column = 0; column < numberOfColumns; column++) {
-                boardCopy[row][column] = board[row][column];
-            }
+            System.arraycopy(board[row], 0, boardCopy[row], 0, numberOfColumns);
         }
         return boardCopy;
     }

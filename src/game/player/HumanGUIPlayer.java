@@ -5,8 +5,8 @@ import game.GameState;
 import java.awt.*;
 
 public class HumanGUIPlayer implements Player {
-    private String name;
-    private Color color;
+    private final String name;
+    private final Color color;
 
     public HumanGUIPlayer(String name, Color color) {
         this.name = name;
@@ -20,6 +20,10 @@ public class HumanGUIPlayer implements Player {
     @Override
     public int nextColumn(GameState gameState) {
         return 42;
+    }
+
+    @Override
+    public void setDepth(int depth) {
     }
 
     @Override

@@ -1,16 +1,18 @@
 package game.player.ai;
 
+import game.GameConfig;
 import game.GameState;
 import game.player.Player;
 
 import java.awt.*;
+import java.util.Random;
 
 import static game.Game.NUM_OF_COLUMNS;
 import static game.Game.NUM_OF_ROWS;
 
 public class MiniMaxAlphaBetaPlayer implements Player {
-    // DEPTH + 1 moves calculated
-    private static final int DEPTH = 8;
+    private static int depth = 1;
+    private static boolean increaseDepth;
     private static final int WIN = 10000;
     private static final int THREE_IN_A_ROW = 15;
     private static final int TWO_IN_A_ROW = 5;
@@ -25,91 +27,89 @@ public class MiniMaxAlphaBetaPlayer implements Player {
 
     @Override
     public int nextColumn(GameState gameState) {
-        int bestScore = Integer.MIN_VALUE;
-        int column = -1;
-        int[] result = new int[NUM_OF_COLUMNS];
-
-        for (int i = 0; i < NUM_OF_COLUMNS; i++) {
-            if (!gameState.isColumnFull(i)) {
-                GameState gameCopy = new GameState(gameState);
-                gameCopy.insertPiece(i, this);
-                result[i] = miniMax(gameCopy, DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
-                if (result[i] > bestScore) {
-                    bestScore = result[i];
-                    column = i;
-                }
-            }
+        long time = System.nanoTime();
+        double turnTime = 0;
+        int[] result = new int[0];
+        while (turnTime < GameConfig.MAX_TURN_TIME) {
+            increaseDepth = false;
+            result = miniMax(gameState, MiniMaxAlphaBetaPlayer.depth, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+            turnTime = (System.nanoTime() - time) / 1_000_000_000.0;
+            System.out.format("AB Player %s's best score possible score with %d moves calculated ahead is %d in column %d\n",
+                    this.getName(), depth, result[1], result[0]);
+            if (turnTime < GameConfig.MAX_TURN_TIME && increaseDepth) MiniMaxAlphaBetaPlayer.depth++;
+            else return result[0];
         }
-        // prolong the game if it is lost
-        if (bestScore == -WIN) {
-            for (int i = 0; i < NUM_OF_COLUMNS; i++) {
-                if (!gameState.isColumnFull(i)) {
-                    GameState gameCopy = new GameState(gameState);
-                    gameCopy.insertPiece(i, this);
-                    result[i] = miniMax(gameCopy, 1, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
-                    if (result[i] > bestScore) {
-                        bestScore = result[i];
-                        column = i;
-                    }
-                }
-            }
-        }
-        System.out.format("Player %s's best possible score is in column %d with %d\n", this.getName(), column, bestScore);
-        return column;
+        return result[0];
     }
 
-    private int miniMax(GameState gameState, int depth, int alpha, int beta, boolean maximizingPlayer) {
+    private int[] miniMax(GameState gameState, int depth, int alpha, int beta, boolean maximizingPlayer) {
         Player currentPlayer = gameState.getLastMovedPlayer();
-        // win
-        if (gameState.checkPlayerWon() && currentPlayer == this) {
-            return WIN;
-        }
-        // loss
-        else if (gameState.checkPlayerWon() && currentPlayer != this) {
-            return -WIN;
-        }
-        // draw
-        else if (gameState.isBoardFull()) {
-            return 0;
-        }
-        // eval
+        if (currentPlayer != null && gameState.checkPlayerWon() && currentPlayer == this) return new int[]{0, WIN};
+        else if (currentPlayer != null && gameState.checkPlayerWon() && currentPlayer != this)
+            return new int[]{0, -WIN};
+        else if (gameState.isBoardFull()) return new int[]{0, 0};
         else if (depth == 0) {
-            return boardEvaluation(gameState, this);
+            increaseDepth = true;
+            return new int[]{0, boardEvaluation(gameState, this)};
         }
 
         int bestScore;
+        int col = 0;
         if (maximizingPlayer) {
-            bestScore = -WIN;
+            bestScore = -10000000;
             for (int i = 0; i < NUM_OF_COLUMNS; i++) {
                 if (!gameState.isColumnFull(i)) {
                     GameState gameCopy = new GameState(gameState);
                     gameCopy.insertPiece(i, this);
-                    int score = miniMax(gameCopy, depth - 1, alpha, beta, false);
+                    int score = miniMax(gameCopy, depth - 1, alpha, beta, false)[1];
                     if (score > bestScore) {
                         bestScore = score;
+                        col = i;
+                    } else if (score == bestScore && depth == MiniMaxAlphaBetaPlayer.depth){
+                        double rand = Math.random();
+                        if (rand < 0.5){
+                            col = i;
+                        }
+                    }
+                    if (depth == MiniMaxAlphaBetaPlayer.depth) {
+                        System.out.format("%s ", score);
+//                        System.out.println("depth " + depth);
+//                        System.out.println("col " + col);
+//                        System.out.println("i " + i);
+//                        System.out.println();
+//                        System.out.println("score " + score);
+//                        System.out.println();
+//                        System.out.println("bestScore " + bestScore);
+//                        System.out.println();
                     }
                     alpha = Integer.max(alpha, bestScore);
-                    if (beta <= alpha)
+                    if (beta < alpha)
                         break;
                 }
             }
         } else {
-            bestScore = WIN;
+            bestScore = 10000000;
             for (int i = 0; i < NUM_OF_COLUMNS; i++) {
                 if (!gameState.isColumnFull(i)) {
                     GameState gameCopy = new GameState(gameState);
                     gameCopy.insertPiece(i, this.getNextPlayer());
-                    int score = miniMax(gameCopy, depth - 1, alpha, beta, true);
+                    int score = miniMax(gameCopy, depth - 1, alpha, beta, true)[1];
                     if (score < bestScore) {
                         bestScore = score;
+                        col = i;
                     }
                     beta = Integer.min(beta, bestScore);
-                    if (beta <= alpha)
+                    if (beta < alpha)
                         break;
                 }
             }
         }
-        return bestScore;
+        return new int[]{col, bestScore};
+    }
+
+    @Override
+    public void setDepth(int depth) {
+        MiniMaxAlphaBetaPlayer.depth = depth;
     }
 
     @Override

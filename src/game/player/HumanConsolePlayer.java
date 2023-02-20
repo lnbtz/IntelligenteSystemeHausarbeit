@@ -8,8 +8,8 @@ import java.util.Scanner;
 
 public class HumanConsolePlayer implements Player {
     private static final Scanner SCANNER = new Scanner(System.in);
-    private String name;
-    private Color color;
+    private final String name;
+    private final Color color;
 
     public HumanConsolePlayer(String name, Color color) {
         this.name = name;
@@ -28,6 +28,11 @@ public class HumanConsolePlayer implements Player {
         }
 
         return column;
+    }
+
+    @Override
+    public void setDepth(int depth) {
+
     }
 
     @Override

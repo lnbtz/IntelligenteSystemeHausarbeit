@@ -1,5 +1,7 @@
 package game.player.ai;
 
+import game.Game;
+import game.GameConfig;
 import game.GameState;
 import game.player.Player;
 
@@ -10,7 +12,8 @@ import static game.Game.NUM_OF_ROWS;
 
 public class MiniMaxPlayer implements Player {
     // DEPTH + 1 moves calculated ahead
-    private static final int DEPTH = 8;
+    private static int depth = 1;
+    private static boolean depthIncrease;
     private static final int WIN = 10000;
     private static final int THREE_IN_A_ROW = 15;
     private static final int TWO_IN_A_ROW = 5;
@@ -25,8 +28,18 @@ public class MiniMaxPlayer implements Player {
 
     @Override
     public int nextColumn(GameState gameState) {
-        int[] result = miniMax(gameState, DEPTH, true);
-        System.out.println("best score is: " + result[1] + " for move in column: " + result[0]);
+        long time = System.nanoTime();
+        double turnTime = 0;
+        int[] result = new int[0];
+        while (turnTime < GameConfig.MAX_TURN_TIME) {
+            depthIncrease = false;
+            result = miniMax(gameState, depth, true);
+            System.out.format("NOAB Player %s's best score possible score with %d moves calculated ahead is %d in column %d\n",
+                    this.getName(), depth, result[1], result[0]);
+            turnTime = (System.nanoTime() - time) / 1_000_000_000.0;
+            if (turnTime < GameConfig.MAX_TURN_TIME && depthIncrease) depth++;
+            else return result[0];
+        }
         return result[0];
     }
 
@@ -37,6 +50,7 @@ public class MiniMaxPlayer implements Player {
         else if (gameState.checkPlayerWon() && currentPlayer != this) return new int[]{0, -WIN};
         else if (gameState.isBoardFull()) return new int[]{0, 0};
         else if (depth == 0) {
+            depthIncrease = true;
             return new int[]{0, boardEvaluation(gameState, this)};
         }
 
@@ -51,6 +65,17 @@ public class MiniMaxPlayer implements Player {
                     if (score > bestScore) {
                         bestScore = score;
                         col = i;
+                    }
+                    if (depth == MiniMaxPlayer.depth) {
+                        System.out.format("%s ", score);
+//                        System.out.println("depth " + depth);
+//                        System.out.println("col " + col);
+//                        System.out.println("i " + i);
+//                        System.out.println();
+//                        System.out.println("score " + score);
+//                        System.out.println();
+//                        System.out.println("bestScore " + bestScore);
+//                        System.out.println();
                     }
                 }
             }
@@ -71,6 +96,11 @@ public class MiniMaxPlayer implements Player {
             }
             return new int[]{col, bestScore};
         }
+    }
+
+    @Override
+    public void setDepth(int depth) {
+        MiniMaxPlayer.depth = depth;
     }
 
     @Override

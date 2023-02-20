@@ -19,7 +19,7 @@ public class Game {
     static int play() throws InterruptedException {
         boolean draw = true;
         currentPlayer = GameConfig.getRandomStartingPlayer();
-        System.out.println(currentPlayer.getName());
+        System.out.println("starting Player: " + currentPlayer.getName());
         gameState = new GameState(NUM_OF_ROWS, NUM_OF_COLUMNS, currentPlayer);
         vis = new ConnectFourVisualization("Connect Four", NUM_OF_ROWS, NUM_OF_COLUMNS, currentPlayer.getColor());
         vis.start();
@@ -56,7 +56,7 @@ public class Game {
 //            System.out.println("It's a draw!");
             return 0;
         } else {
-//            System.out.println(currentPlayer.getName() + " wins!");
+            System.out.println(currentPlayer.getName() + " wins!");
             if (currentPlayer.getName().equals("BLUE")) {
                 return 1;
             } else return -1;
@@ -65,7 +65,7 @@ public class Game {
 
     public static void main(String[] args) throws InterruptedException {
         List<Integer> winners = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i <3; i++) {
             winners.add(play());
         }
         System.out.println("The winners are " + winners);
