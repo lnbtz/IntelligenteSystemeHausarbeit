@@ -37,7 +37,7 @@ public class RandomPlayer implements Player {
     }
 
     @Override
-    public void setDepth(int depth) {
+    public void setCurrentMaxDepth(int currentMaxDepth) {
 
     }
 

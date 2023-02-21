@@ -24,6 +24,10 @@ public class GameState {
         this.startingPlayer = startingPlayer;
     }
 
+    public int getLastMoveColumn() {
+        return lastMoveColumn;
+    }
+
     /**
      * New Game Constructor
      */
@@ -80,8 +84,8 @@ public class GameState {
         return numOfPiecesPlayed >= numberOfRows * numberOfColumns;
     }
 
-    public boolean isColumnFull(int column) {
-        return board[0][column] != null;
+    public boolean isColumnNotFull(int column) {
+        return board[0][column] == null;
     }
 
     /**
@@ -138,7 +142,6 @@ public class GameState {
         if(lastMovedPlayer == null || numOfPiecesPlayed <= 0) {
             throw new IllegalStateException("No piece has been played yet.");
         }
-        // TODO Felder einer Viererlinie merken, um sie visualisieren zu können
         return checkForHorizontalLine(lastMoveRow, lastMovedPlayer) ||
                 checkForVerticalLine(lastMoveColumn, lastMovedPlayer) ||
                 checkForDiagonalLine(lastMoveRow, lastMoveColumn, lastMovedPlayer);

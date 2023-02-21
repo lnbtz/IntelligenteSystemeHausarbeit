@@ -9,7 +9,7 @@ public interface Player {
 
     int nextColumn(GameState gameState);
 
-    void setDepth(int depth);
+    void setCurrentMaxDepth(int currentMaxDepth);
 
     Color getColor();
 

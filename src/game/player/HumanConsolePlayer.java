@@ -31,7 +31,7 @@ public class HumanConsolePlayer implements Player {
     }
 
     @Override
-    public void setDepth(int depth) {
+    public void setCurrentMaxDepth(int currentMaxDepth) {
 
     }
 
