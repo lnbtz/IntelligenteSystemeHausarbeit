@@ -38,10 +38,11 @@ public class MiniMaxAlphaBetaPlayer implements AIPlayer {
             increaseDepth = false;
             result = miniMax(gameState, currentMaxDepth, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
             turnTime = (System.nanoTime() - time) / 1_000_000_000.0;
-//            System.out.format("AB Player %s's best score possible score with %d moves calculated ahead is %d in column %d\n",
-//                    this.getName(), depth, result[1], result[0]);
             if (turnTime < GameConfig.MAX_TURN_TIME && increaseDepth) currentMaxDepth++;
-            else return result[0];
+            else break;
+        }
+        if (result[1] == -WIN) {
+            result = miniMax(gameState, 1, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
         }
         return result[0];
     }
@@ -64,6 +65,7 @@ public class MiniMaxAlphaBetaPlayer implements AIPlayer {
             bestScore = -10_000_000;
             for (int i = 0; i < NUM_OF_COLUMNS; i++) {
                 if (gameState.isColumnNotFull(i)) {
+                    if (col == -1) col = i;
                     GameState gameCopy = new GameState(gameState);
                     gameCopy.insertPiece(i, this);
                     int score = miniMax(gameCopy, depth - 1, alpha, beta, false)[1];
@@ -85,6 +87,7 @@ public class MiniMaxAlphaBetaPlayer implements AIPlayer {
             bestScore = 10_000_000;
             for (int i = 0; i < NUM_OF_COLUMNS; i++) {
                 if (gameState.isColumnNotFull(i)) {
+                    if (col == -1) col = i;
                     GameState gameCopy = new GameState(gameState);
                     gameCopy.insertPiece(i, this.getNextPlayer());
                     int score = miniMax(gameCopy, depth - 1, alpha, beta, true)[1];

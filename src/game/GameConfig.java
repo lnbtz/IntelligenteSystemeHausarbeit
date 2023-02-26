@@ -1,7 +1,11 @@
 package game;
 
+import game.player.HumanGUIPlayer;
 import game.player.Player;
+import game.player.ai.AIPlayer;
 import game.player.ai.MiniMaxAlphaBetaPlayer;
+import game.player.ai.MiniMaxPlayer;
+import game.player.ai.evaluation.Evaluation;
 
 import java.awt.*;
 
@@ -20,6 +24,11 @@ public class GameConfig {
         } else {
             return PLAYER_A;
         }
+    }
+
+    public static void setEvaluation(Evaluation eval) {
+        ((AIPlayer)PLAYER_A).setEvaluation(eval);
+        ((AIPlayer)PLAYER_B).setEvaluation(eval);
     }
 
     public static Player getRandomStartingPlayer() {

@@ -1,0 +1,81 @@
+Round 11
+player70 with win % of 72.22222222222221
+player70 wins: 13
+player70 losses: 5
+player70 draws: 0
+254 three in a row
+29 two in a row
+220 center value
+
+player65 with win % of 50.0
+player65 wins: 9
+player65 losses: 9
+player65 draws: 0
+311 three in a row
+22 two in a row
+269 center value
+
+player74 with win % of 27.77777777777778
+player74 wins: 5
+player74 losses: 13
+player74 draws: 0
+380 three in a row
+27 two in a row
+220 center value
+
+player75 with win % of 27.77777777777778
+player75 wins: 5
+player75 losses: 13
+player75 draws: 0
+380 three in a row
+27 two in a row
+220 center value
+
+player76 with win % of 61.111111111111114
+player76 wins: 11
+player76 losses: 7
+player76 draws: 0
+311 three in a row
+27 two in a row
+269 center value
+
+player77 with win % of 38.88888888888889
+player77 wins: 7
+player77 losses: 11
+player77 draws: 0
+311 three in a row
+29 two in a row
+269 center value
+
+player78 with win % of 55.55555555555556
+player78 wins: 10
+player78 losses: 8
+player78 draws: 0
+346 three in a row
+27 two in a row
+269 center value
+
+player79 with win % of 33.33333333333333
+player79 wins: 6
+player79 losses: 12
+player79 draws: 0
+311 three in a row
+29 two in a row
+220 center value
+
+player80 with win % of 61.111111111111114
+player80 wins: 11
+player80 losses: 7
+player80 draws: 0
+254 three in a row
+29 two in a row
+269 center value
+
+player81 with win % of 72.22222222222221
+player81 wins: 13
+player81 losses: 5
+player81 draws: 0
+311 three in a row
+22 two in a row
+269 center value
+

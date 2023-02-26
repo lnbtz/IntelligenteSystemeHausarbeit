@@ -51,7 +51,7 @@ public class MiniMaxPlayer implements AIPlayer {
         else if (gameState.isBoardFull()) return new int[]{0, 0};
         else if (depth == 0) {
             depthIncrease = true;
-            return new int[]{0, eval.boardEvaluation(gameState, this)};
+            return new int[]{0, 0};
         }
 
         if (maximizingPlayer) {

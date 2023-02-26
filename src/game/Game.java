@@ -3,6 +3,7 @@ package game;
 import game.player.HumanGUIPlayer;
 import game.player.Player;
 import game.player.ai.AIPlayer;
+import game.player.ai.evaluation.Evaluation;
 import visualization.ConnectFourVisualization;
 
 import java.sql.Time;
@@ -66,22 +67,10 @@ public class Game {
         return players;
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        Set<AIPlayer> players = new HashSet<>();
-        for (int i = 0; i < 20; i++) {
-            players.addAll(Objects.requireNonNull(play()));
-        }
-        for (AIPlayer player :
-                players) {
-            System.out.println("////////////////////////////////////////////////////////////////////");
-            System.out.println(player.getName() + " won " + player.winPercentage() + "% of the games");
-            System.out.println(player.getEval().getCenterValue() + " center value");
-            System.out.println(player.getEval().getThreeInARow() + " three in a row");
-            System.out.println(player.getEval().getTwoInARow() + " two i a row");
-            System.out.println("wins: " + player.getWins());
-            System.out.println("losses: " + player.getLosses());
-            System.out.println("draws: " + player.getDraws());
-            System.out.println("///////////////////////////////////////////////////////////////////");
+    public static void main(String[] args) {
+        GameConfig.setEvaluation(new Evaluation(15, 5, 3));
+        for (int i = 0; i < 10; i++) {
+            play();
         }
     }
 }

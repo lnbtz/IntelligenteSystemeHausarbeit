@@ -1,0 +1,42 @@
+Round 1
+player1 with win % of 0.0
+player1 wins: 0
+player1 losses: 0
+player1 draws: 0
+1 three in a row
+1 two in a row
+1 center value
+
+player2 with win % of 0.0
+player2 wins: 0
+player2 losses: 0
+player2 draws: 0
+2 three in a row
+2 two in a row
+2 center value
+
+Round 2
+player1 with win % of 0.0
+player1 wins: 0
+player1 losses: 0
+player1 draws: 0
+1 three in a row
+1 two in a row
+1 center value
+
+player2 with win % of 0.0
+player2 wins: 0
+player2 losses: 0
+player2 draws: 0
+4 three in a row
+4 two in a row
+4 center value
+
+player3 with win % of 0.0
+player3 wins: 0
+player3 losses: 0
+player3 draws: 0
+3 three in a row
+3 two in a row
+3 center value
+

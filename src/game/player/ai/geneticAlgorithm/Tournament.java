@@ -18,12 +18,12 @@ public class Tournament {
         AIGame game;
         for (int i = 0; i < participantsList.size(); i++) {
             player1 = participantsList.get(i);
+            System.out.println(i + " " + player1.getName());
             for (int j = i + 1; j < participantsList.size(); j++) {
                 player2 = participantsList.get(j);
                 game = new AIGame(player1, player2);
-                game.setStartingPlayer(player1);
-                game.play();
-                game.setStartingPlayer(player2);
+                if(Math.random() < 0.5) game.setStartingPlayer(player1);
+                else game.setStartingPlayer(player2);
                 game.play();
             }
         }
