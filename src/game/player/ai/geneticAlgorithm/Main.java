@@ -16,7 +16,7 @@ public class Main {
             // start tournament
             Tournament tournament = new Tournament(population);
             tournament.startTournament();
-            ResultWriter.appendToFile(population, "/Users/leonbeitz/Documents/uni/s05/is/intelligentesystemehausarbeit/resources/" + "4.txt");
+            ResultWriter.appendToFile(population, "/Users/leonbeitz/Documents/uni/s05/is/intelligentesystemehausarbeit/resources/" + "6.txt");
             // get new generation
             populationGenerator = new PopulationGenerator(population);
             population = populationGenerator.generateNewPopulation();
