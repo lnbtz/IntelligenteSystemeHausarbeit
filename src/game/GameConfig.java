@@ -13,7 +13,7 @@ public class GameConfig {
     //    public static Player PLAYER_A = new HumanGUIPlayer("RED", Color.RED);
     // MiniMaxAlphaBetaPlayer // HumanGUIPlayer
     public static double MAX_TURN_TIME = 0.025;
-    public static Player PLAYER_A = new MiniMaxAlphaBetaPlayer("RED", Color.RED);
+    public static Player PLAYER_A = new HumanGUIPlayer("RED", Color.RED);
     public static Player PLAYER_B = new MiniMaxAlphaBetaPlayer("BLUE", Color.BLUE);
     private static final Player DEFAULT_STARTING_PLAYER = PLAYER_B;
     public static boolean RANDOM_STARTING_PLAYER = true;
@@ -27,7 +27,6 @@ public class GameConfig {
     }
 
     public static void setEvaluation(Evaluation eval) {
-        ((AIPlayer)PLAYER_A).setEvaluation(eval);
         ((AIPlayer)PLAYER_B).setEvaluation(eval);
     }
 

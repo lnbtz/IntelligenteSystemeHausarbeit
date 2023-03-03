@@ -52,25 +52,18 @@ public class Game {
         }
         System.out.println("game took " + turnCounter + " turns");
 
-        List<AIPlayer> players = new ArrayList<>();
-        players.add((AIPlayer) currentPlayer);
-        players.add((AIPlayer) currentPlayer.getNextPlayer());
-
         if (draw) {
-//            System.out.println("It's a draw!");
-            ((AIPlayer) currentPlayer).incrementDraws();
+            System.out.println("It's a draw!");
         } else {
             System.out.println(currentPlayer.getName() + " wins!");
-            ((AIPlayer) currentPlayer).incrementWins();
-            ((AIPlayer) currentPlayer.getNextPlayer()).incrementLosses();
         }
-        return players;
+        return new ArrayList<>();
     }
 
     public static void main(String[] args) {
         GameConfig.setEvaluation(new Evaluation(15, 5, 3));
-        for (int i = 0; i < 10; i++) {
-            play();
-        }
+        play();
+        GameConfig.setEvaluation(new Evaluation(37, 4, 82));
+        play();
     }
 }

@@ -38,6 +38,7 @@ public class GameState {
                 startingPlayer
         );
     }
+
     /**
      * Copy Constructor
      */
@@ -90,7 +91,8 @@ public class GameState {
 
     /**
      * Inserts a piece into the specified column.
-     * @param column The column to insert the piece into
+     *
+     * @param column        The column to insert the piece into
      * @param currentPlayer The current player
      * @return The row that the new piece was inserted into
      */
@@ -110,28 +112,18 @@ public class GameState {
         }
 
         // insert the piece
-        board[row-1][column] = currentPlayer;
+        board[row - 1][column] = currentPlayer;
 
         //update status
         numOfPiecesPlayed++;
         this.lastMovedPlayer = currentPlayer;
 
-        lastMoveRow = row-1;
+        lastMoveRow = row - 1;
         lastMoveColumn = column;
         pastGameMoves.push(lastMoveRow);
         pastGameMoves.push(lastMoveColumn);
 
-        return row-1;
-    }
-
-    public void revertLastMove() {
-        if (numOfPiecesPlayed >= 1) {
-            board[lastMoveRow][lastMoveColumn] = null;
-            lastMoveColumn = pastGameMoves.pop();
-            lastMoveRow = pastGameMoves.pop();
-            numOfPiecesPlayed--;
-            lastMovedPlayer = lastMovedPlayer.getNextPlayer();
-        }
+        return row - 1;
     }
 
     /**
@@ -139,16 +131,12 @@ public class GameState {
      * to win.
      */
     public boolean checkPlayerWon() {
-        if(lastMovedPlayer == null || numOfPiecesPlayed <= 0) {
+        if (lastMovedPlayer == null || numOfPiecesPlayed <= 0) {
             throw new IllegalStateException("No piece has been played yet.");
         }
         return checkForHorizontalLine(lastMoveRow, lastMovedPlayer) ||
                 checkForVerticalLine(lastMoveColumn, lastMovedPlayer) ||
                 checkForDiagonalLine(lastMoveRow, lastMoveColumn, lastMovedPlayer);
-    }
-
-    public int getNumOfPiecesPlayed() {
-        return numOfPiecesPlayed;
     }
 
     /**
@@ -158,12 +146,11 @@ public class GameState {
         int lineLength = 0;
 
         for (int column = 0; column < numberOfColumns; column++) {
-            if(board[row][column] == player) {
+            if (board[row][column] == player) {
                 lineLength++;
-                if(lineLength >= 4)
+                if (lineLength >= 4)
                     return true;
-            }
-            else
+            } else
                 lineLength = 0;
         }
 
@@ -177,12 +164,11 @@ public class GameState {
         int lineLength = 0;
 
         for (int row = 0; row < numberOfRows; row++) {
-            if(board[row][column] == player) {
+            if (board[row][column] == player) {
                 lineLength++;
-                if(lineLength >= 4)
+                if (lineLength >= 4)
                     return true;
-            }
-            else
+            } else
                 lineLength = 0;
         }
 
@@ -208,12 +194,11 @@ public class GameState {
         // search diagonal
         int lineLength = 0;
         for (; r < numberOfRows && c < numberOfColumns; r++, c++) {
-            if(board[r][c] == player) {
+            if (board[r][c] == player) {
                 lineLength++;
-                if(lineLength >= 4)
+                if (lineLength >= 4)
                     return true;
-            }
-            else
+            } else
                 lineLength = 0;
         }
 
@@ -223,20 +208,19 @@ public class GameState {
         c = column;
 
         // find bottom left of diagonal
-        while (r < numberOfRows -1 && c > 0) {
+        while (r < numberOfRows - 1 && c > 0) {
             r++;
             c--;
         }
 
         // search diagonal
         lineLength = 0;
-        for(; r >= 0 && c < numberOfColumns; r--, c++) {
-            if(board[r][c] == player) {
+        for (; r >= 0 && c < numberOfColumns; r--, c++) {
+            if (board[r][c] == player) {
                 lineLength++;
-                if(lineLength >= 4)
+                if (lineLength >= 4)
                     return true;
-            }
-            else
+            } else
                 lineLength = 0;
         }
 
@@ -256,9 +240,9 @@ public class GameState {
         System.out.println();
         for (int row = 0; row < numberOfRows; row++) {
             for (int column = 0; column < numberOfColumns; column++) {
-                if(board[row][column] == GameConfig.PLAYER_A)
+                if (board[row][column] == GameConfig.PLAYER_A)
                     System.out.print("A ");
-                else if(board[row][column] == GameConfig.PLAYER_B)
+                else if (board[row][column] == GameConfig.PLAYER_B)
                     System.out.print("B ");
                 else
                     System.out.print("_ ");

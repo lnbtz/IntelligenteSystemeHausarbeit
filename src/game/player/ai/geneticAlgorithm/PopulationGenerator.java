@@ -41,7 +41,7 @@ public class PopulationGenerator {
         }
     }
 
-    public List<AIPlayer> generateRandomPopulation(int number) {
+    public List<AIPlayer> generateRandomStartingPopulation(int number) {
         Random rng = new Random();
         List<AIPlayer> population = new ArrayList<>();
         AIPlayer newPlayer;

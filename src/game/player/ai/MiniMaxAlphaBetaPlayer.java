@@ -43,7 +43,7 @@ public class MiniMaxAlphaBetaPlayer implements AIPlayer {
         }
         if (result[1] == -WIN) {
             result = miniMax(gameState, 1, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
-        }
+        } else if(result[1] == WIN) System.out.println("AI found a forced win!");
         return result[0];
     }
 
